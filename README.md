@@ -5,17 +5,20 @@ Web client for [Genymobile/scrcpy][scrcpy] and more.
 ## Requirements
 
 Browser must support the following technologies:
+
 * WebSockets
 * Media Source Extensions and h264 decoding;
 * WebWorkers
 * WebAssembly
 
 Server:
+
 * Node.js v10+
 * node-gyp ([installation](https://github.com/nodejs/node-gyp#installation))
 * `adb` executable must be available in the PATH environment variable
 
 Device:
+
 * Android 5.0+ (API 21+)
 * Enabled [adb debugging](https://developer.android.com/studio/command-line/adb.html#Enabling)
 * On some devices, you also need to enable
@@ -27,6 +30,7 @@ to control it using keyboard and mouse.
 Make sure you have installed [node.js](https://nodejs.org/en/download/),
 [node-gyp](https://github.com/nodejs/node-gyp) and
 [build tools](https://github.com/nodejs/node-gyp#installation)
+
 ```shell
 git clone https://github.com/NetrisTV/ws-scrcpy.git
 cd ws-scrcpy
@@ -44,13 +48,15 @@ npm start
 ### Android
 
 #### Screen casting
+
 The modified [version][fork] of [Genymobile/scrcpy][scrcpy] used to stream
 H264-video, which then decoded by one of included decoders:
 
 ##### Mse Player
 
 Based on [xevokk/h264-converter][xevokk/h264-converter].
-HTML5 Video.<br>
+HTML5 Video.
+
 Requires [Media Source API][MSE] and `video/mp4; codecs="avc1.42E01E"`
 [support][isTypeSupported]. Creates mp4 containers from NALU, received from a
 device, then feeds them to [MediaSource][MediaSource]. In theory, it can use
@@ -59,13 +65,15 @@ hardware acceleration.
 ##### Broadway Player
 
 Based on [mbebenita/Broadway][broadway] and
-[131/h264-live-player][h264-live-player].<br>
+[131/h264-live-player][h264-live-player].
+
 Software video-decoder compiled into wasm-module.
 Requires [WebAssembly][wasm] and preferably [WebGL][webgl] support.
 
 ##### TinyH264 Player
 
-Based on [udevbe/tinyh264][tinyh264].<br>
+Based on [udevbe/tinyh264][tinyh264].
+
 Software video-decoder compiled into wasm-module. A slightly updated version of
 [mbebenita/Broadway][broadway].
 Requires [WebAssembly][wasm], [WebWorkers][workers], [WebGL][webgl] support.
@@ -77,6 +85,7 @@ Requires [WebCodecs][webcodecs] support. At the moment, available only in
 [Chromium](https://www.chromestatus.com/feature/5669293909868544) and derivatives.
 
 #### Remote control
+
 * Touch events (including multi-touch)
 * Multi-touch emulation: <kbd>CTRL</kbd> to start with center at the center of
 the screen, <kbd>SHIFT</kbd> + <kbd>CTRL</kbd> to start with center at the
@@ -88,17 +97,21 @@ current point
 * Device "rotation"
 
 #### File push
+
 Drag & drop an APK file to push it to the `/data/local/tmp` directory. You can
 install it manually from the included [xtermjs/xterm.js][xterm.js] terminal
 emulator (see below).
 
 #### Remote shell
+
 Control your device from `adb shell` in your browser.
 
 #### Debug WebPages/WebView
+
 [/docs/Devtools.md](/docs/Devtools.md)
 
 #### File listing
+
 * List files
 * Upload files by drag & drop
 * Download files
@@ -125,6 +138,7 @@ frame encoded as jpeg image.
 
 To control device we use [appium/WebDriverAgent][WebDriverAgent].
 Functionality limited to:
+
 * Simple touch
 * Scroll
 * Home button click
@@ -139,6 +153,7 @@ You might want to enable `AssistiveTouch` on your device: `Settings/General/Acce
 You can customize project before build by overriding the
 [default configuration](/webpack/default.build.config.json) in
 [build.config.override.json](/build.config.override.json):
+
 * `INCLUDE_APPL` - include code for iOS device tracking and control
 * `INCLUDE_GOOG` - include code for Android device tracking and control
 * `INCLUDE_ADB_SHELL` - [remote shell](#remote-shell) for android devices
@@ -179,7 +194,9 @@ further investigation.
 * On Safari file upload does not show progress (it works in one piece).
 
 ## Security warning
+
 Be advised and keep in mind:
+
 * There is no encryption between browser and node.js server (you can [configure](#run-configuration) HTTPS).
 * There is no encryption between browser and WebSocket server on android device.
 * There is no authorization on any level.
@@ -189,6 +206,7 @@ for connections on all network interfaces (see [custom build](#custom-build)).
 disconnected.
 
 ## Related projects
+
 * [Genymobile/scrcpy][scrcpy]
 * [xevokk/h264-converter][xevokk/h264-converter]
 * [131/h264-live-player][h264-live-player]
@@ -201,6 +219,7 @@ disconnected.
 ## scrcpy websocket fork
 
 Currently, support of WebSocket protocol added to v1.19 of scrcpy
+
 * [Prebuilt package](/vendor/Genymobile/scrcpy/scrcpy-server.jar)
 * [Source code][fork]
 
