@@ -15,6 +15,10 @@
   },
   "author": "Sergey Volkov <drauggres@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NetrisTV/ws-scrcpy.git"
+  },
   "dependencies": {
     "@dead50f7/adbkit": "^2.11.4",
     "express": "^4.21.2",
