@@ -13,7 +13,7 @@ Browser must support the following technologies:
 
 Server:
 
-* Node.js v10+
+* Node.js [v14.2.0+](https://stackoverflow.com/q/59574047#comment-109470337)
 * node-gyp ([installation](https://github.com/nodejs/node-gyp#installation))
 * `adb` executable must be available in the PATH environment variable
 
