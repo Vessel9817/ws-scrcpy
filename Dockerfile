@@ -17,4 +17,5 @@ RUN apk add --no-cache android-tools npm
 WORKDIR /root/ws-scrcpy
 COPY --from=builder /ws-scrcpy .
 
-ENTRYPOINT [ "npm", "start" ]
+ENTRYPOINT [ "npm" ]
+CMD [ "start" ]
