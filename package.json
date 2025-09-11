@@ -11,6 +11,7 @@
     "script:dist:start": "node ./index.js",
     "lint": "eslint src/ --ext .ts",
     "format": "eslint src/ --fix --ext .ts",
+    "compat": "ts-node ./src/utils/compat_checker.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sergey Volkov <drauggres@gmail.com>",
