@@ -1,0 +1,10 @@
+services:
+  # Run with: docker compose run -it --rm nvm_playground
+  'nvm_playground':
+    build:
+      context: '.'
+      dockerfile: './Dockerfile'
+      target: 'nvm'
+    command: [ "/bin/bash" ]
+    tty: true
+    stdin_open: true
