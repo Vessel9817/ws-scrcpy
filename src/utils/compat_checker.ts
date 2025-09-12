@@ -62,12 +62,16 @@ function getNodeSupport(
 ): PackageNodeSupportInfo {
     let versions: PackageNodeSupportInfo = {};
     const dep = deps.packages[depName];
+    const hasExplicitSupport = dep.engines != null &&
+        !Array.isArray(dep.engines) &&
+        'node' in dep.engines;
+    const tryChildren = !hasExplicitSupport || depName.length < 1;
 
-    if (dep.engines != null && 'node' in dep.engines) {
+    if (hasExplicitSupport) {
         // Getting node version supported by package
-        versions[depName] = dep.engines.node;
+        versions[depName] = (dep.engines as Record<string, string>).node;
     }
-    else {
+    if (tryChildren) {
         // As a fallback, querying package subdependencies
         versions = {
             ...versions,

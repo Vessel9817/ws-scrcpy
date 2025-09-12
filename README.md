@@ -15,6 +15,7 @@ Server:
 
 * Node.js [v14.2.0+](https://stackoverflow.com/q/59574047#comment-109470337)
 * node-gyp ([installation](https://github.com/nodejs/node-gyp#installation))
+* node-pty ([installation](https://github.com/microsoft/node-pty#dependencies))
 * `adb` executable must be available in the PATH environment variable
 
 Device:
@@ -27,9 +28,10 @@ to control it using keyboard and mouse.
 
 ## Build and Start
 
-Make sure you have installed [node.js](https://nodejs.org/en/download/),
-[node-gyp](https://github.com/nodejs/node-gyp) and
-[build tools](https://github.com/nodejs/node-gyp#installation)
+Make sure you have installed
+[Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm/#using-a-node-version-manager-to-install-nodejs-and-npm);
+[node-gyp](https://github.com/nodejs/node-gyp#installation); and
+[node-pty](https://github.com/microsoft/node-pty#dependencies)
 
 ```shell
 git clone https://github.com/NetrisTV/ws-scrcpy.git

@@ -76,5 +76,8 @@
   },
   "optionalDependencies": {
     "appium-xcuitest-driver": "^3.62.0"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
