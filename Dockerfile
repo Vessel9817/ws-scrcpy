@@ -34,6 +34,7 @@ RUN \
     && rm '/tmp/install.sh'
 
 # Installing Node.js and NPM
+# Projected EOL of v24: Oct 2028
 # https://nodejs.org/en/download/releases
 SHELL [ "bash", "-c" ]
 ENV NODE_VERSION="24.8.0"
@@ -46,7 +47,7 @@ RUN \
         python3 \
     && apt-get clean -qq
 
-ENTRYPOINT [ "bash", "-c", "source $NVM_DIR/nvm.sh && exec \"$@\"", "--" ]
+ENTRYPOINT [ "bash", "-c", "source \"${NVM_DIR}/nvm.sh\" && exec \"$@\"", "--" ]
 CMD [ "tail", "-f", "/dev/null" ]
 
 FROM nvm AS ws_scrcpy
@@ -109,21 +110,30 @@ RUN \
     && make test \
     && make install
 
-ENV PATH=${PATH}:/usr/local/bin/python3
+ENV PYTHON="/usr/local/bin/python3/python"
 
-# TODO Installing ws-scrcpy
+# Installing ws-scrcpy
 WORKDIR /usr/ws-scrcpy/
-COPY [ "./", "./" ]
-
+COPY [ "./package.json", "./package-lock.json*", "./npm-shrinkwrap.json*", "./" ]
 RUN \
     source "${NVM_DIR}/nvm.sh" \
-    && npm i -g node-gyp \
-    && npm i \
+    && npm i
+
+COPY [ "./", "./" ]
+RUN \
+    source "${NVM_DIR}/nvm.sh" \
     && npm run dist
+
 WORKDIR /usr/ws-scrcpy/dist/
 RUN \
     source "${NVM_DIR}/nvm.sh" \
-    && npm i 
+    && npm i
 
-WORKDIR /usr/ws-scrcpy/
-ENTRYPOINT [ "npm", "start" ]
+ARG NODE_GYP_VERSION="^11.4.2"
+RUN \
+    source "${NVM_DIR}/nvm.sh" \
+    npm i -g "node-gyp@${NODE_GYP_VERSION}"
+
+ENTRYPOINT [ "bash", "-c", "source \"${NVM_DIR}/nvm.sh\" && exec npm \"$@\"", "--" ]
+CMD [ "start" ]
+EXPOSE 8000

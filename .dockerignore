@@ -1,0 +1,17 @@
+# .gitignore files
+/node_modules
+/dist
+/build
+/.idea
+/.vscode
+**/*.log
+**/*.old
+
+# .dockerignore files
+Dockerfile*
+docker-compose*
+docker*
+*.docker*
+.gitignore
+.prettierrc
+config.example.yaml
