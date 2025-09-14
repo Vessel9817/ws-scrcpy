@@ -1,4 +1,6 @@
-FROM ubuntu:jammy-20230624@sha256:b060fffe8e1561c9c3e6dea6db487b900100fc26830b9ea2ec966c151ab4c020 AS nvm
+ARG BASE_IMAGE=ubuntu:jammy-20230624@sha256:b060fffe8e1561c9c3e6dea6db487b900100fc26830b9ea2ec966c151ab4c020
+
+FROM ${BASE_IMAGE} AS nvm
 
 RUN \
     apt-get update -qq \
@@ -134,6 +136,5 @@ RUN \
     source "${NVM_DIR}/nvm.sh" \
     npm i -g "node-gyp@${NODE_GYP_VERSION}"
 
-ENTRYPOINT [ "bash", "-c", "source \"${NVM_DIR}/nvm.sh\" && exec npm \"$@\"", "--" ]
-CMD [ "start" ]
+CMD [ "npm", "start" ]
 EXPOSE 8000
