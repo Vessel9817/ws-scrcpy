@@ -1,10 +1,16 @@
-ARG BASE_IMAGE=ubuntu:jammy-20230624@sha256:b060fffe8e1561c9c3e6dea6db487b900100fc26830b9ea2ec966c151ab4c020
+# Ubuntu Noble standard support reaches EOL in April 2029
+# https://ubuntu.com/about/release-cycle
+ARG BASE_IMAGE=ubuntu:noble-20250910@sha256:985be7c735afdf6f18aaa122c23f87d989c30bba4e9aa24c8278912aac339a8d
+
+FROM ${BASE_IMAGE} AS base
+
+COPY [ "./docker/apt.conf", "/etc/apt/" ]
 
 FROM ${BASE_IMAGE} AS nvm
 
 RUN \
     apt-get update -qq \
-    && apt-get install -yqq --no-install-recommends \
+    && apt-get install -yqq \
         binutils \
         ca-certificates \
         coreutils \
@@ -58,18 +64,16 @@ FROM nvm AS ws_scrcpy
 # Everything else is an optional/required dependency of Python
 RUN \
     # deb-src is necessary for apt-get build-dep
-    sed -i 's/^# deb-src /deb-src /' /etc/apt/sources.list \
+    sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources \
     && apt-get update -qq \
     # Shuts up interactive dependency installations
     && DEBIAN_FRONTEND=noninteractive apt-get install -yqq \
         tzdata \
-    && apt-get build-dep -qq --no-install-recommends \
-        python3 \
-    && apt-get install -yqq --no-install-recommends \
+    # https://github.com/python/devguide/issues/1654
+    && apt-get install -yqq \
         build-essential \
         gcc \
         gdb \
-        # https://github.com/python/devguide/issues/1654
         inetutils-inetd \
         lcov \
         libbz2-dev \
